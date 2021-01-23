@@ -1,8 +1,10 @@
-package com.dibarter;
+package com.dibarter.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.dibarter.R;
 
 public class MainActivity extends AppCompatActivity {
 
