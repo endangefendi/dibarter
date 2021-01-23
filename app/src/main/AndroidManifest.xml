@@ -24,7 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dibarter"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".activity.SplashscreenActivity"></activity>
+        <activity android:name=".activity.SplashscreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Dibarter"
+            tools:ignore="LockedOrientationActivity"/>
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
