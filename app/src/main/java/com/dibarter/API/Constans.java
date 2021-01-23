@@ -27,6 +27,10 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * Created by Endang Efendi on Jan 2021.
+ */
+
 public class Constans {
     public static class BASE_URL{
         //Server Developer

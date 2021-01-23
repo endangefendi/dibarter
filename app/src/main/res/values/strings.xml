@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Dibarter</string>
+
+    <string name="ads_app_id">          ca-app-pub-6974028524615087~1208693907</string>
+    <string name="ads_app_banner">      ca-app-pub-6974028524615087/6269448899</string>
+    <string name="ads_app_Interstisial">ca-app-pub-6974028524615087/2330203881</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -39,17 +39,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dibarter"
         tools:ignore="LockedOrientationActivity">
-        <activity android:name=".activity.LoginActivity"
+        <activity android:name=".activity.PasangBarangActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Dibarter"
             tools:ignore="LockedOrientationActivity"/>
         <activity
-            android:name=".activity.SplashscreenActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Dibarter"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Dibarter"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".activity.SplashscreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Dibarter"
             tools:ignore="LockedOrientationActivity">
@@ -85,6 +90,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/white" />
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ads_app_id" />
     </application>
 
 </manifest>
