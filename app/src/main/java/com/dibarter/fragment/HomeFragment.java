@@ -100,31 +100,25 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         list = new ArrayList<>();
         adapter = new BarangAdapter(getActivity(), this, list);
         recyclerView.setAdapter(adapter);
-        String[] data = {"ksjdahfjak;","feawjkhfew","flosujfeka","hjgweafiwaf",
-                "oneahfewa", "mowaforw", "hfejwafewa","fewalfuewaf",
-                "ksjdahfjak;","feawjkhfew","flosujfeka","hjgweafiwaf",
-                "oneahfewa", "mowaforw", "hfejwafewa","fewalfuewaf"};
-
-
         addData();
     }
 
     private void addData() {
         list.clear();
-        BarangModel item1 = new  BarangModel("ksjdahfjak");
-        BarangModel item2 = new  BarangModel("feawjkhfew");
-        BarangModel item3 = new  BarangModel("flosujfeka");
-        BarangModel item4 = new  BarangModel("ksjdahfjak");
-        BarangModel item5 = new  BarangModel("hjgweafiwaf");
-        BarangModel item6 = new  BarangModel("ksjdahfjak");
-        BarangModel item7 = new  BarangModel("ksjdahfjak");
-        BarangModel item8 = new  BarangModel("ksjdahfjak");
-        BarangModel item9 = new  BarangModel("ksjdahfjak");
-        BarangModel item10 = new  BarangModel("ksjdahfjak");
-        BarangModel item11 = new  BarangModel("ksjdahfjak");
-        BarangModel item12 = new  BarangModel("ksjdahfjak");
-        BarangModel item13 = new  BarangModel("ksjdahfjak");
-        BarangModel item14 = new  BarangModel("ksjdahfjak");
+        BarangModel item1 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 1","deskripsi 1", "tgl 1");
+        BarangModel item2 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 2","deskripsi 2", "tgl 2");
+        BarangModel item3 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 3","deskripsi 3", "tgl 3");
+        BarangModel item4 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 4","deskripsi 4", "tgl 4");
+        BarangModel item5 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 5","deskripsi 5", "tgl 5");
+        BarangModel item6 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 6","deskripsi 6", "tgl 6");
+        BarangModel item7 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 7","deskripsi 7", "tgl 7");
+        BarangModel item8 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 8","deskripsi 8", "tgl 8");
+        BarangModel item9 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 9","deskripsi 9", "tgl 9");
+        BarangModel item10 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 10","deskripsi 10", "tgl 10");
+        BarangModel item11 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 11","deskripsi 11", "tgl 11");
+        BarangModel item12 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 12","deskripsi 12", "tgl 12");
+        BarangModel item13 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 13","deskripsi 13", "tgl 13");
+        BarangModel item14 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 14","deskripsi 14", "tgl 14");
         list.add(item1);
         list.add(item2);
         list.add(item3);
@@ -143,11 +137,12 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         addBannerAds();
     }
 
+    public static int IndexIklan = 4;
     private void addBannerAds() {
         // Loop through the items array and place a new banner ad in every ith position in
         // the items List.
 
-        for (int i = 0; i <= list.size(); i += 3) {
+        for (int i = 0; i <= list.size(); i += IndexIklan) {
             List<String> testDevices = new ArrayList<>();
             testDevices.add("33BE2250B43518CCDA7DE426D04EE231");
             RequestConfiguration requestConfiguration

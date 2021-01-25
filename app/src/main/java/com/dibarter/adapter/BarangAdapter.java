@@ -5,17 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dibarter.R;
 import com.dibarter.model.BarangModel;
 import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.dibarter.fragment.HomeFragment.IndexIklan;
 
 public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "AgendaAdapter";
@@ -70,7 +75,7 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     /**
      * The {@link AdViewHolder} class.
      */
-    public class AdViewHolder extends RecyclerView.ViewHolder {
+    public static class AdViewHolder extends RecyclerView.ViewHolder {
 
         AdViewHolder(View view) {
             super(view);
@@ -83,7 +88,7 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      */
     @Override
     public int getItemViewType(int position) {
-        return (position % 3 == 0) ? BANNER_AD_VIEW_TYPE
+        return (position % IndexIklan == 0) ? BANNER_AD_VIEW_TYPE
                 : MENU_ITEM_VIEW_TYPE;
     }
 
@@ -114,16 +119,20 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         int viewType = getItemViewType(position);
         switch (viewType) {
             case MENU_ITEM_VIEW_TYPE:
-                MenuItemViewHolder menuItemHolder = (MenuItemViewHolder) holder;
-                BarangModel menuItem = (BarangModel) list.get(position);
-
-                // Get the menu item image resource ID.
-                String imageName = menuItem.getNama_barang();
-                int imageResID = context.getResources().getIdentifier(imageName, "drawable",
-                        context.getPackageName());
+                MenuItemViewHolder ItemHolder = (MenuItemViewHolder) holder;
+                BarangModel item = (BarangModel) list.get(position);
 
                 // Add the menu item details to the menu item view.
-                menuItemHolder.menuItemName.setText(menuItem.getNama_barang());
+                ItemHolder.foto.setImageResource(item.getDrfoto());
+//                Glide.with(context).load(item.getDrfoto())
+//                        .placeholder(R.drawable.ic_account_circle)
+//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                        .into(ItemHolder.foto);
+                ItemHolder.tv_judul.setText(item.getJudul());
+                ItemHolder.tv_deskripsi.setText(item.getDeskripsi());
+                ItemHolder.tv_tgl.setText(item.getTgl());
+                ItemHolder.tv_lokasi.setText(item.getLokasi());
+
                 break;
             case BANNER_AD_VIEW_TYPE:
                 // fall through
@@ -145,15 +154,27 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 // Add the banner ad to the ad view.
                 adCardView.addView(adView);
+
+                if (position==0){
+                    adView.setVisibility(View.GONE);
+                }
         }
     }
 
-    public class MenuItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView menuItemName;
+    public static class MenuItemViewHolder extends RecyclerView.ViewHolder {
+        TextView tv_judul;
+        TextView tv_deskripsi;
+        TextView tv_lokasi;
+        TextView tv_tgl;
+        ImageView foto;
 
         MenuItemViewHolder(View view) {
             super(view);
-            menuItemName = view.findViewById(R.id.text);
+            tv_judul = view.findViewById(R.id.judul);
+            tv_deskripsi = view.findViewById(R.id.deskripsi);
+            tv_lokasi = view.findViewById(R.id.lokasi);
+            tv_tgl = view.findViewById(R.id.tgl);
+            foto = view.findViewById(R.id.foto);
         }
     }
 
