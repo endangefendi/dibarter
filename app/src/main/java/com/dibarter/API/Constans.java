@@ -34,10 +34,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Constans {
     public static class BASE_URL{
         //Server Developer
-        private static final String URL              = "https://production.coodink.com/android_racika/api/";
+        private static final String URL              = "http://production.dibarter.com/";
 
         //Server Production
-//        private static final String URL              = "https://androidappsracikafalah.mastermultijaya.co.id/api/";
+//        private static final String URL              = "";
 
         public static final String open_html        = "<!DOCTYPE html><html><head><style type=\"text/css\">@font-face {font-family: MyFont;src: url(\"file:///android_res/font/avenir_medium_09.ttf\")}body {font-family: MyFont;font-size: 14px;text-align: justify; color: #404040; line-height: 26px;}</style></head><body>";
         public static final String close_html =     "</body></html>";
