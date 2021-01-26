@@ -3,6 +3,10 @@ package com.dibarter.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,55 +23,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  */
 
 public class MainActivity extends AppCompatActivity {
-    public BottomNavigationView bottomNavigationView;
-
+    BottomNavigationView navView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bottomNavigationView = findViewById(R.id.navigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.navigation_home :
-                        loadFragmment(new HomeFragment());
-                        break;
-                    case R.id.navigation_plus :
-                        startActivity(new Intent(MainActivity.this, PasangBarangActivity.class));
-                        break;
-                    case R.id.navigation_notification :
-                        loadFragmment(new NotificationFragment());
-                        break;
-                    case R.id.navigation_account :
-                        loadFragmment(new AccountFragment());
-                        break;
-                }
+         navView = findViewById(R.id.nav_view);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_plus, R.id.navigation_account, R.id.navigation_notification)
+                .build();
 
-                return true;
-            }
-        });
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController(navView, navController);
 
-        loadFragmment(new HomeFragment());
-    }
-
-    public void loadFragmment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
     }
 
     @Override
-    public void onBackPressed() {
-        if (bottomNavigationView.getSelectedItemId() == R.id.navigation_home) {
-            super.onBackPressed();
-        } else {
-            bottomNavigationView.setSelectedItemId(R.id.navigation_home);
-        }
+    protected void onResume() {
+        super.onResume();
+        navView.getMenu().getItem(0).setChecked(true);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
 
 }

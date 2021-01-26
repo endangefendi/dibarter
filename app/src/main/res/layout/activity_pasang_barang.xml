@@ -18,17 +18,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/iv_back"
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@id/iv_back"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:padding="@dimen/_5sdp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_back"
-                tools:ignore="VectorDrawableCompat" />
-
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="visible"
+                    android:padding="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_back"
+                    tools:ignore="VectorDrawableCompat" />
+            </com.balysv.materialripple.MaterialRippleLayout>
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
@@ -171,28 +173,34 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/btn_simpan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_form"
-                android:backgroundTint="@color/purple_700"
-                android:padding="@dimen/_7sdp"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Simpan"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/white"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_next"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    app:tint="@color/white" />
-            </LinearLayout>
+                    android:background="@drawable/bg_form"
+                    android:backgroundTint="@color/purple_700"
+                    android:padding="@dimen/_7sdp"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Simpan"
+                        android:textSize="@dimen/_12sdp"
+                        android:textColor="@color/white"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_next"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        app:tint="@color/white" />
+                </LinearLayout>
+            </com.balysv.materialripple.MaterialRippleLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
