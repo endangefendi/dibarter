@@ -17,7 +17,6 @@ import com.dibarter.R;
 import com.dibarter.model.BarangModel;
 import com.google.android.gms.ads.AdView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.dibarter.fragment.HomeFragment.IndexIklan;
@@ -123,15 +122,14 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 BarangModel item = (BarangModel) list.get(position);
 
                 // Add the menu item details to the menu item view.
-                ItemHolder.foto.setImageResource(item.getDrfoto());
-//                Glide.with(context).load(item.getDrfoto())
-//                        .placeholder(R.drawable.ic_account_circle)
-//                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                        .into(ItemHolder.foto);
-                ItemHolder.tv_judul.setText(item.getJudul());
-                ItemHolder.tv_deskripsi.setText(item.getDeskripsi());
-                ItemHolder.tv_tgl.setText(item.getTgl());
-                ItemHolder.tv_lokasi.setText(item.getLokasi());
+                Glide.with(context).load(item.getItem_gambar_utama())
+                        .placeholder(R.drawable.ic_account_circle)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(ItemHolder.foto);
+                ItemHolder.tv_judul.setText(item.getItem_title());
+                ItemHolder.tv_deskripsi.setText(item.getItem_desc());
+                ItemHolder.tv_tgl.setText(item.getItem_tanggal());
+                ItemHolder.tv_lokasi.setText(item.getItem_wilayah());
 
                 break;
             case BANNER_AD_VIEW_TYPE:

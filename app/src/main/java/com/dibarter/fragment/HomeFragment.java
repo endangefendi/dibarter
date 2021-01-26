@@ -9,10 +9,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.dibarter.API.Constans;
 import com.dibarter.R;
 import com.dibarter.adapter.BarangAdapter;
 import com.dibarter.model.BarangModel;
@@ -22,8 +31,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.RequestConfiguration;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +46,7 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    final static String TAG = "HomeFragment";
     private RecyclerView recyclerView;
     private BarangAdapter adapter;
     private List<Object> list;
@@ -100,41 +115,60 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         list = new ArrayList<>();
         adapter = new BarangAdapter(getActivity(), this, list);
         recyclerView.setAdapter(adapter);
-        addData();
+        addData(1);
     }
 
-    private void addData() {
+    private void addData(int page) {
         list.clear();
-        BarangModel item1 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 1","deskripsi 1", "tgl 1");
-        BarangModel item2 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 2","deskripsi 2", "tgl 2");
-        BarangModel item3 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 3","deskripsi 3", "tgl 3");
-        BarangModel item4 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 4","deskripsi 4", "tgl 4");
-        BarangModel item5 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 5","deskripsi 5", "tgl 5");
-        BarangModel item6 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 6","deskripsi 6", "tgl 6");
-        BarangModel item7 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 7","deskripsi 7", "tgl 7");
-        BarangModel item8 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 8","deskripsi 8", "tgl 8");
-        BarangModel item9 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 9","deskripsi 9", "tgl 9");
-        BarangModel item10 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 10","deskripsi 10", "tgl 10");
-        BarangModel item11 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 11","deskripsi 11", "tgl 11");
-        BarangModel item12 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 12","deskripsi 12", "tgl 12");
-        BarangModel item13 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 13","deskripsi 13", "tgl 13");
-        BarangModel item14 = new  BarangModel(R.drawable.ic_placeholder,"ksjdahfjak", "lokasi 14","deskripsi 14", "tgl 14");
-        list.add(item1);
-        list.add(item2);
-        list.add(item3);
-        list.add(item4);
-        list.add(item5);
-        list.add(item6);
-        list.add(item7);
-        list.add(item8);
-        list.add(item9);
-        list.add(item10);
-        list.add(item11);
-        list.add(item12);
-        list.add(item13);
-        list.add(item14);
-        adapter.addList(list);
-        addBannerAds();
+        final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        StringRequest request = new StringRequest(Request.Method.GET, Constans.BASE_URL.GET_ITEM_LISTS+page, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, "onResponse" + response);
+                try {
+                    JSONObject object = new JSONObject(response);
+                    int status = object.getInt("status");
+                    String message = object.getString("message");
+                    if (status == 200 && !message.equalsIgnoreCase("") ) {
+                        String item_list = object.getString("data");
+                        JSONArray array = new JSONArray(item_list);
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            int no = obj.getInt("no");
+                            int item_id = obj.getInt("item_id");
+                            String item_title = obj.getString("item_title");
+                            String item_desc = obj.getString("item_desc");
+                            String item_highlight = obj.getString("item_highlight");
+                            String item_gambar_utama = obj.getString("item_gambar_utama");
+                            String item_wilayah = obj.getString("item_wilayah");
+                            String item_tanggal = obj.getString("item_tanggal");
+                            int item_views = obj.getInt("item_views");
+
+                            BarangModel item = new BarangModel(no,item_id,item_title,item_desc,item_highlight,item_gambar_utama,item_wilayah,item_tanggal,item_views);
+                            list.add(item);
+                        }
+                        adapter.addList(list);
+                        adapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                        addBannerAds();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Constans.parseError(getContext(), error);
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return Constans.getHeaders();
+            }
+        };
+        request.setRetryPolicy(Constans.getDefaultRetryPolicy());
+        requestQueue.add(request);
     }
 
     public static int IndexIklan = 4;
@@ -164,6 +198,6 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
 
     @Override
     public void onRefresh() {
-        addData();
+        addData(0);
     }
 }

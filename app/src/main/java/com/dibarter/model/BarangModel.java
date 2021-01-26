@@ -1,78 +1,99 @@
 package com.dibarter.model;
 
-import android.graphics.drawable.Drawable;
-
 public class BarangModel {
 
-    private String foto;
-    private String judul;
-    private String lokasi;
-    private String deskripsi ;
-    private String tgl;
-    private int Drfoto;
+    private int no;
+    private int item_id;
+    private String item_title;
+    private String item_desc;
+    private String item_highlight;
+    private String item_gambar_utama;
+    private String item_wilayah;
+    private String item_tanggal;
+    private int item_views;
 
-    public BarangModel(String foto, String judul, String lokasi,String deskripsi , String tgl) {
-        this.foto = foto;
-        this.judul = judul;
-        this.lokasi = lokasi;
-        this.deskripsi = deskripsi;
-        this.tgl = tgl;
+    public BarangModel(int no, int item_id, String item_title, String item_desc, String item_highlight, String item_gambar_utama,
+                       String item_wilayah, String item_tanggal, int item_views) {
+        this.no = no;
+        this.item_id = item_id;
+        this.item_title = item_title;
+        this.item_desc = item_desc;
+        this.item_highlight = item_highlight;
+        this.item_gambar_utama = item_gambar_utama;
+        this.item_wilayah = item_wilayah;
+        this.item_tanggal = item_tanggal;
+        this.item_views = item_views;
     }
 
-    public BarangModel(int Drfoto, String judul, String lokasi, String deskripsi , String tgl) {
-        this.Drfoto = Drfoto;
-        this.judul = judul;
-        this.lokasi = lokasi;
-        this.deskripsi = deskripsi;
-        this.tgl = tgl;
+    public int getNo() {
+        return no;
     }
 
-    public String getFoto() {
-        return foto;
+    public void setNo(int no) {
+        this.no = no;
     }
 
-    public void setFoto(String foto) {
-        this.foto = foto;
+    public int getItem_id() {
+        return item_id;
     }
 
-    public String getJudul() {
-        return judul;
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
     }
 
-    public void setJudul(String judul) {
-        this.judul = judul;
+    public String getItem_title() {
+        return item_title;
     }
 
-    public String getLokasi() {
-        return lokasi;
+    public void setItem_title(String item_title) {
+        this.item_title = item_title;
     }
 
-    public void setLokasi(String lokasi) {
-        this.lokasi = lokasi;
+    public String getItem_desc() {
+        return item_desc;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
+    public void setItem_desc(String item_desc) {
+        this.item_desc = item_desc;
     }
 
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+    public String getItem_highlight() {
+        return item_highlight;
     }
 
-    public String getTgl() {
-        return tgl;
+    public void setItem_highlight(String item_highlight) {
+        this.item_highlight = item_highlight;
     }
 
-
-    public void setTgl(String tgl) {
-        this.tgl = tgl;
+    public String getItem_gambar_utama() {
+        return item_gambar_utama;
     }
 
-    public int getDrfoto() {
-        return Drfoto;
+    public void setItem_gambar_utama(String item_gambar_utama) {
+        this.item_gambar_utama = item_gambar_utama;
     }
 
-    public void setDrfoto(int drfoto) {
-        Drfoto = drfoto;
+    public String getItem_wilayah() {
+        return item_wilayah;
+    }
+
+    public void setItem_wilayah(String item_wilayah) {
+        this.item_wilayah = item_wilayah;
+    }
+
+    public String getItem_tanggal() {
+        return item_tanggal;
+    }
+
+    public void setItem_tanggal(String item_tanggal) {
+        this.item_tanggal = item_tanggal;
+    }
+
+    public int getItem_views() {
+        return item_views;
+    }
+
+    public void setItem_views(int item_views) {
+        this.item_views = item_views;
     }
 }
