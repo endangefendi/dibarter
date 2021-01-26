@@ -11,6 +11,8 @@
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_135sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginStart="@dimen/_20sdp"
         android:src="@drawable/ic_logo"/>
 
     <TextView
