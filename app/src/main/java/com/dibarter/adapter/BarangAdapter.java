@@ -41,7 +41,7 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        Log.e("getItemCount", "getItemCount "+list.size());
+//        Log.e("getItemCount", "getItemCount "+list.size());
         return list.size();
     }
 
@@ -62,9 +62,6 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(BarangAdapter.OnItemClickListener listener){
-        this.listener = listener;
-    }
 
     public interface OnItemClickListener {
         void onItemClicked(int position, BarangModel item);
@@ -157,6 +154,14 @@ public class BarangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     adView.setVisibility(View.GONE);
                 }
         }
+
+        BarangModel item = (BarangModel) list.get(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) listener.onItemClicked(position, item);
+            }
+        });
     }
 
     public static class MenuItemViewHolder extends RecyclerView.ViewHolder {

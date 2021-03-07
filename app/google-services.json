@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "831550201419",
+    "project_id": "dibarterindonesia-f90eb",
+    "storage_bucket": "dibarterindonesia-f90eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:831550201419:android:46af236e6a91157c3877ce",
+        "android_client_info": {
+          "package_name": "com.dibarter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "831550201419-hiusoq2k43ifoelbb62lt346kssjd14v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dibarter",
+            "certificate_hash": "92f65bfa69822a367ea57ed0dd9707e2db1685f5"
+          }
+        },
+        {
+          "client_id": "831550201419-si2ndnuj9ev06bjup2f98gflkioicjhd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfnEkOiBNZpyBfbUqApXC277ovC7uLv6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "831550201419-si2ndnuj9ev06bjup2f98gflkioicjhd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

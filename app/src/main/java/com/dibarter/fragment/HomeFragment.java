@@ -9,22 +9,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dibarter.API.Constans;
 import com.dibarter.R;
 import com.dibarter.adapter.BarangAdapter;
+import com.dibarter.adapter.SuggestAdapter;
 import com.dibarter.model.BarangModel;
+import com.dibarter.model.SugestModel;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -39,56 +47,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickListener, SuggestAdapter.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     final static String TAG = "HomeFragment";
     private RecyclerView recyclerView;
+    private RecyclerView list_sugest;
     private BarangAdapter adapter;
+    private SuggestAdapter adapter_suggest;
     private List<Object> list;
-    private SwipeRefreshLayout refreshLayout;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private List<SugestModel> list_suggest;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private SwipeRefreshLayout refreshLayout;
+
+    EditText etSearch;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -97,7 +79,7 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_home, container, false);
 
-
+        etSearch = v.findViewById(R.id.et_search);
         refreshLayout = v.findViewById(R.id.refresh);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setRefreshing(true);
@@ -106,6 +88,12 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         LinearLayoutManager layoutManagerKategori = new LinearLayoutManager(getContext());
         layoutManagerKategori.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManagerKategori);
+
+        list_sugest = v.findViewById(R.id.list_sugest);
+        list_sugest.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        list_sugest.setLayoutManager(layoutManager);
         return v;
     }
 
@@ -113,9 +101,79 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list = new ArrayList<>();
+        list_suggest = new ArrayList<>();
         adapter = new BarangAdapter(getActivity(), this, list);
+        adapter_suggest = new SuggestAdapter(getActivity(), this, list_suggest);
+        list_sugest.setAdapter(adapter_suggest);
         recyclerView.setAdapter(adapter);
         addData(1);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                sugestionCari(s);
+            }
+        });
+    }
+
+    private void sugestionCari(Editable s) {
+        list_suggest.clear();
+        try {
+            JSONObject json = new JSONObject();
+            json.put("keyword", s);
+
+            final RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Constans.BASE_URL.GET_SUGGEST_CARI, json, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    Log.e(TAG, "onResponse" + response);
+                    try {
+                        int status = response.getInt("status");
+                        String message = response.getString("message");
+                        if (status == 200 && !message.equalsIgnoreCase("")) {
+                            String item_list = response.getString("data");
+                            JSONArray array = new JSONArray(item_list);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject obj = array.getJSONObject(i);
+                                String suggestion = obj.getString("suggestion");
+                                String values = obj.getString("value");
+                                SugestModel item = new SugestModel(suggestion, values);
+                                list_suggest.add(item);
+                            }
+                            adapter_suggest.addList(list_suggest);
+                            adapter_suggest.notifyDataSetChanged();
+                            refreshLayout.setRefreshing(false);
+                            addBannerAds();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Constans.parseError(getContext(), error);
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    return Constans.getHeaders();
+                }
+            };
+            request.setRetryPolicy(Constans.getDefaultRetryPolicy());
+            requestQueue.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void addData(int page) {
@@ -191,13 +249,21 @@ public class HomeFragment extends Fragment implements BarangAdapter.OnItemClickL
         }
         refreshLayout.setRefreshing(false);
     }
+
     @Override
     public void onItemClicked(int position, BarangModel item) {
+        Toast.makeText(getContext(),"Clicked: "+item.getItem_title(), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onRefresh() {
         addData(0);
+    }
+
+    @Override
+    public void onItemClicked(int position, SugestModel item) {
+        Toast.makeText(getContext(),"Clicked: "+item.getSuggestion(), Toast.LENGTH_SHORT).show();
+
     }
 }

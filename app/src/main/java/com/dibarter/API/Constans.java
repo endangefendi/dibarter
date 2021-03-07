@@ -48,6 +48,7 @@ public class Constans {
         public static final String close_html =     "</body></html>";
 
         public static final String GET_ITEM_LISTS   = URL+"items/lists/";
+        public static final String GET_SUGGEST_CARI = URL+"items/suggestion";
 
 
         private static final String GET_PROFILE      = URL+"profil/detail";

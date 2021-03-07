@@ -3,6 +3,7 @@ package com.dibarter.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.Navigation;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class PasangBarangActivity extends AppCompatActivity implements View.OnCl
         findViewById(R.id.btn_simpan).setOnClickListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
